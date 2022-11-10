@@ -306,7 +306,16 @@ const usersRouter = require("./routes/usersRoute");
 
 const app = express();
 app.use(express.json());
-app.use(morgan("dev"));
+
+if(process.env.NODE_ENV === "development"){
+    app.use(morgan("dev"));
+}
+
+
+
+// SERVING TEMPLATE DEMO
+app.use(express.static(`${__dirname}/nft-data/img`));
+
 
 //  CUSTOM Middle Ware
 app.use((req, res, next) => {
@@ -326,7 +335,4 @@ app.use("/api/v1/users", usersRouter);
 
 
 
-const port = 3000;
-app.listen(port, () => {
-  console.log(`App running on port ${port}....`);
-});
+module.exports = app;
